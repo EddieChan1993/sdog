@@ -173,7 +173,7 @@ class ExtraService extends BaseService
      */
     public static function newScoreLog():array
     {
-        $loginTime = self::$clientInfo['u_time'];
+        $loginTime = self::$clientInfo['in_time'];
         $data['c_time']= ['BETWEEN',[$loginTime,time()]];
         $data['client_id'] = self::$clientId;
 
@@ -197,6 +197,12 @@ class ExtraService extends BaseService
         $seeNum = Db::name('score_log')
             ->where($seeData)
             ->count();
+
+        //更新用户进入小程序时间
+        $condition['id'] = self::$clientId;
+        $condition['in_time'] = time();
+        Db::name('clients')
+            ->update($condition);
 
         return [
             'seeNums' => $seeNum,
