@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS sdog_client_img;
+﻿DROP TABLE IF EXISTS sdog_client_img;
 CREATE TABLE `sdog_client_img` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) NOT NULL DEFAULT '0',
@@ -7,23 +7,28 @@ CREATE TABLE `sdog_client_img` (
   `u_time` int(11) NOT NULL COMMENT '编辑时间',
   `d_time` int(11) NOT NULL COMMENT '软删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='用户相册表';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COMMENT='用户相册表';
 INSERT INTO `sdog_client_img` VALUES 
-('4','2','[\"zzz.jpg\",\"ddd.jpg\",\"aaa.png\"]','1521698343','0','0'),
-('5','3','[\"zzz.jpg\",\"ddd.jpg\",\"aaa.png\"]','1521698343','0','0'),
-('6','4','[\"zzz.jpg\",\"ddd.jpg\",\"aaa.png\"]','1521698343','0','0'),
-('7','5','[\"zzz.jpg\",\"ddd.jpg\",\"aaa.png\"]','1521698343','0','0'),
-('9','8','[\"zzz.jpg\",\"ddd.jpg\",\"aaa.png\"]','1521698343','0','0'),
-('13','9','[\"zzz.jpg\",\"ddd.jpg\",\"aaa.png\"]','1521698343','0','0'),
-('14','10','[\"zzz.jpg\",\"ddd.jpg\",\"aaa.png\"]','1521698343','0','0'),
-('15','11','[\"zzz.jpg\",\"ddd.jpg\",\"aaa.png\"]','1521698343','0','0'),
-('16','1000','[\"zzz.jpg\",\"ddd.jpg\",\"aaa.png\"]','1521698343','0','0');
+('4','1','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96212_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\"]','1521698343','0','0'),
+('5','2','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96212_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\"]','1521698343','0','0'),
+('6','3','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96212_5.html\"]','1521698343','0','0'),
+('7','4','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96212_5.html\"]','1521698343','0','0'),
+('9','5','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96212_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\"]','1521698343','0','0'),
+('13','6','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\"]','1521698343','0','0'),
+('14','7','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96212_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\"]','1521698343','0','0'),
+('15','8','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96212_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\"]','1521698343','0','0'),
+('17','9','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\"]','1521963414','1521965441','0'),
+('18','10','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96212_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\"]','1521967206','0','0'),
+('19','11','[\"http://sj.zol.com.cn/bizhi/showpic/480x800_96212_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\",\"http://sj.zol.com.cn/bizhi/showpic/480x800_96209_5.html\"]','1521967206','0','0'),
+('20','1000','[\"one.jpg\",\"two.jpg\",\"three.jpg\"]','1521967206','1522553377','0');
 DROP TABLE IF EXISTS sdog_clients;
 CREATE TABLE `sdog_clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `c_time` int(11) NOT NULL COMMENT '创建时间',
-  `u_time` int(11) NOT NULL COMMENT '编辑时间',
-  `d_time` int(11) NOT NULL COMMENT '软删除',
+  `openid` varchar(255) NOT NULL DEFAULT '',
+  `c_time` int(11) DEFAULT '0' COMMENT '创建时间',
+  `u_time` int(11) DEFAULT '0' COMMENT '编辑时间',
+  `d_time` int(11) DEFAULT '0' COMMENT '软删除',
+  `in_time` int(11) NOT NULL DEFAULT '0' COMMENT '进入app时间',
   `name` varchar(10) NOT NULL DEFAULT '' COMMENT '用户名',
   `sex` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '性别0-男 1-女',
   `school` varchar(10) NOT NULL DEFAULT '' COMMENT '学校',
@@ -36,43 +41,46 @@ CREATE TABLE `sdog_clients` (
   `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
   `country` varchar(10) NOT NULL DEFAULT '' COMMENT '国家',
   `city` varchar(10) NOT NULL DEFAULT '' COMMENT '城市',
-  `openid` varchar(255) NOT NULL DEFAULT '',
   `self_info_ok` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否完善个人信息0-没有1-有',
   `age` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '年龄',
-  `collect_num` int(11) NOT NULL DEFAULT '0' COMMENT '被收藏数量',
-  `thumb_num` int(11) NOT NULL DEFAULT '0' COMMENT '被点赞数量',
+  `collect_num` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '被收藏数量',
+  `thumb_num` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '被点赞数量',
   `view_num` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0-正常 1-禁用',
+  `height` int(3) NOT NULL DEFAULT '0' COMMENT '身高',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 INSERT INTO `sdog_clients` VALUES 
-('1','1521698343','0','0','123','0','','0','','','','0','123','123','123','123','123','1','0','0','0','0'),
-('2','1521698812','0','0','aaa','0','','0','','','','0','123','123123','123','123','123123123','1','0','0','0','0'),
-('3','1521698817','0','0','aaa','0','','0','','','','0','123','123123','123','123','12312312323','1','0','0','0','0'),
-('4','1521698820','0','0','aaa','0','','0','','','','0','123','123123','123','123','12312312312','1','0','0','0','0'),
-('5','1521698829','0','0','aaa','0','','0','','','','0','123','123123','123','123','12312311212','1','0','0','0','0'),
-('6','1521698833','0','0','aaa','0','','0','','','','0','123','123123','123','123','123123111212','1','0','0','0','0'),
-('7','1521698836','0','0','aaa','0','','0','','','','0','123','123123','123','123','1231231112121233','0','0','0','0','0'),
-('8','1521698840','0','0','aaa','0','','0','','','','0','123','123123','123','123','123123111213434','0','0','0','0','0'),
-('9','1521698844','0','0','aaa','0','','0','','','','0','123','123123','123','123','12312311121123132','0','0','0','0','0'),
-('10','1521707499','0','0','aaa','0','','0','','','','0','123','123123','123','123','12312311121333','0','0','0','0','0'),
-('11','1521707502','0','0','aaa','0','','0','','','','0','123','123123','123','123','123123111213333331','0','0','0','0','0'),
-('1000','1521707770','0','0','aaa','0','','0','','','','0','123','123123','123','123','1231231112133333311','0','0','0','0','0');
+('1','123','1521698343','1521967206','0','0','小花猫','1','电子科技大学','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','72','四川','123','绵阳','升家坝','1','21','33','12','11','0','160'),
+('2','123123123','1521698812','0','0','0','抠脚大汉','0','东南大学','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','22','0','3','22','0','166'),
+('3','12312312323','1521698817','0','0','0','噩梦终结者','1','四川大学','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','25','22','12','0','0','165'),
+('4','12312312312','1521698820','0','0','0','无敌香港脚','0','西华师范','2012-01-14','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','21','1','22','11','0','162'),
+('5','12312311212','1521698829','0','0','0','熏衣草','1','四川大学','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','22','1','32','22','0','163'),
+('6','123123111212','1521698833','0','0','0','茅房不知','0','北大青鸟','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','24','11','0','11','0','160'),
+('7','1231231112121233','1521698836','0','0','0','干饼子','1','四川大学','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','22','0','23','0','0','170'),
+('8','123123111213434','1521698840','0','0','0','牛肉丸子','0','西南石油','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','23','22','2','33','0','155'),
+('9','12312311121123132','1521698844','0','0','0','花千骨小妹子','1','四川大学','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','22','0','23','33','0','156'),
+('10','12312311121333','1521707499','0','0','0','流氓兔','0','西南科技大学','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','20','0','111','0','0','157'),
+('11','123123111213333331','1521707502','0','0','0','霹雳芭芭拉','1','四川外国语学院','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','0','四川','123123','绵阳','升家坝','1','19','33','0','22','0','158'),
+('1000','1231231112133333311','1521707770','1522555203','0','1522555541','小花猫ee','1','四川大学','2012-01-13','高大威猛，帅气逼人','dc_wen2','18380591555','5184','四川','123123','绵阳','升家坝','1','20','0','44','11','0','160');
 DROP TABLE IF EXISTS sdog_collect;
 CREATE TABLE `sdog_collect` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `collect_client_id` int(11) NOT NULL DEFAULT '0' COMMENT '收藏的用户id',
   `client_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
-  `c_time` int(11) NOT NULL COMMENT '创建时间',
-  `u_time` int(11) NOT NULL COMMENT '编辑时间',
-  `d_time` int(11) NOT NULL COMMENT '软删除',
+  `c_time` int(11) DEFAULT '0' COMMENT '创建时间',
+  `u_time` int(11) DEFAULT '0' COMMENT '编辑时间',
+  `d_time` int(11) DEFAULT '0' COMMENT '软删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='收藏';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='收藏';
 INSERT INTO `sdog_collect` VALUES 
 ('1','10','1','1521698833','0','0'),
 ('2','11','1','1521698833','0','0'),
 ('3','8','2','1521698833','0','0'),
 ('4','4','3','1521698833','0','0'),
-('5','1000','1','1521698833','0','0');
+('5','1','1000','1521698833','0','0'),
+('9','2','1000','1521966887','0','0'),
+('12','1000','1','1522553519','0','0');
 DROP TABLE IF EXISTS sdog_imgs;
 CREATE TABLE `sdog_imgs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -243,11 +251,24 @@ CREATE TABLE `sdog_score_log` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `client_id` int(11) NOT NULL DEFAULT '0',
   `score` int(11) NOT NULL DEFAULT '0' COMMENT '积分',
-  `c_time` int(11) NOT NULL COMMENT '创建时间',
-  `u_time` int(11) NOT NULL COMMENT '编辑时间',
-  `d_time` int(11) NOT NULL COMMENT '软删除',
+  `c_time` int(11) DEFAULT '0' COMMENT '创建时间',
+  `u_time` int(11) DEFAULT '0' COMMENT '编辑时间',
+  `d_time` int(11) DEFAULT '0' COMMENT '软删除',
+  `type` tinyint(3) DEFAULT NULL COMMENT '类型',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='积分日志';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='积分日志';
+INSERT INTO `sdog_score_log` VALUES 
+('1','编辑个人资料','1000','-5','1522553378','0','0','1'),
+('2','查看他人','1000','-5','1522553444','0','0','0'),
+('3','被赞','1000','1','1522553511','0','0','4'),
+('4','被她/他所喜欢','1000','1','1522553519','0','0','5'),
+('5','推广','1000','10','1522553526','0','0','2'),
+('6','被她/他查看','1','5','1522554429','0','0','7'),
+('7','查看他人','1000','-5','1522554429','0','0','0'),
+('8','被她/他查看','1000','5','1522554429','0','0','7'),
+('9','查看他人','1','-5','1522554429','0','0','0'),
+('10','被她/他查看','1000','5','1522554520','0','0','7'),
+('11','查看他人','1','-5','1522554520','0','0','0');
 DROP TABLE IF EXISTS sdog_term_relationships;
 CREATE TABLE `sdog_term_relationships` (
   `tid` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -311,16 +332,13 @@ CREATE TABLE `sdog_thumb_up` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `thumb_client_id` int(11) NOT NULL DEFAULT '0' COMMENT '点赞用户id',
   `client_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
-  `c_time` int(11) NOT NULL COMMENT '创建时间',
-  `u_time` int(11) NOT NULL COMMENT '编辑时间',
-  `d_time` int(11) NOT NULL COMMENT '软删除',
+  `c_time` int(11) DEFAULT '0' COMMENT '创建时间',
+  `u_time` int(11) DEFAULT '0' COMMENT '编辑时间',
+  `d_time` int(11) DEFAULT '0' COMMENT '软删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='点赞';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='点赞';
 INSERT INTO `sdog_thumb_up` VALUES 
-('1','8','2','1521698833','0','0'),
-('2','10','2','1521698833','0','0'),
-('3','9','1','1521698833','0','0'),
-('4','1000','1','1521698833','0','0');
+('1','1000','1','1522553511','0','0');
 DROP TABLE IF EXISTS sdog_users;
 CREATE TABLE `sdog_users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -342,7 +360,7 @@ CREATE TABLE `sdog_users` (
   KEY `user_nicename` (`user_nicename`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 INSERT INTO `sdog_users` VALUES 
-('1','admin','','f354bc916f4979959bb4c274e8e92976','aZKZBygJtL','admin','dc_wen663@163.com','127.0.0.1','1517386997','1517207080','1489155324','1','','0');
+('1','admin','','f354bc916f4979959bb4c274e8e92976','aZKZBygJtL','admin','dc_wen663@163.com','117.139.251.57','1522415595','1522115349','1489155324','1','','2');
 DROP TABLE IF EXISTS sdog_widgets;
 CREATE TABLE `sdog_widgets` (
   `wid_id` int(11) NOT NULL AUTO_INCREMENT,
