@@ -8,11 +8,11 @@
 
 namespace app\home\service;
 
-
 use app\common\model\ScoreModel;
 use app\common\service\BaseService;
 use app\common\service\CurdService;
 use think\cache\driver\Redis;
+use think\Db;
 use think\Exception;
 
 class ExtraService extends BaseService
@@ -111,6 +111,12 @@ class ExtraService extends BaseService
         }
         $res['score_list'] = $data;
         $res['allScore'] = $selfInfo['score'];
+
+        //清除未读积分消息
+        $redis = new Redis();
+        $key = "new_scores_log:" . self::$clientId;
+        $redis->rm($key);
+
         return $res;
     }
 
@@ -145,14 +151,14 @@ class ExtraService extends BaseService
                 $today = strtotime(date('Ymd'));
                 if ($signInTime < $today) {
                     $redis->set($key, time());
-                    ScoreService::score(ScoreModel::$signInType, self::$clientId);
+                    ScoreService::score(ScoreModel::$signInGetType, self::$clientId);
                     $flag = "签到成功";
                 }else{
                     $flag = "今天已经签过了";
                 }
             }else{
                 $redis->set($key, time());
-                ScoreService::score(ScoreModel::$signInType, self::$clientId);
+                ScoreService::score(ScoreModel::$signInGetType, self::$clientId);
                 $flag = "签到成功";
             }
         } catch (Exception $e) {
@@ -162,11 +168,52 @@ class ExtraService extends BaseService
     }
 
     /**
-     * 离线阶段的积分情况
+     * 离线期间积分记录
      * @return array
      */
-    public static function noSeeScoreLog():array
+    public static function newScoreLog():array
     {
-        var_dump(self::$clientInfo);
+        $loginTime = self::$clientInfo['u_time'];
+        $data['c_time']= ['BETWEEN',[$loginTime,time()]];
+        $data['client_id'] = self::$clientId;
+
+        $collectData['type'] = ScoreModel::$collectedGetType;
+        $collectData=array_merge($collectData, $data);
+        //被收藏的个数
+        $colectSum=Db::name('score_log')
+            ->where($collectData)
+            ->count();
+
+        //被点赞
+        $thumbUpData['type'] = ScoreModel::$thumbUpedGetType;
+        $thumbUpData = array_merge($thumbUpData, $data);
+        $thumbUpSum = Db::name('score_log')
+            ->where($thumbUpData)
+            ->count();
+
+        //被查看
+        $seeData['type'] = ScoreModel::$seedGetType;
+        $seeData = array_merge($seeData, $data);
+        $seeNum = Db::name('score_log')
+            ->where($seeData)
+            ->count();
+
+        return [
+            'seeNums' => $seeNum,
+            'thumbUpNums' => $thumbUpSum,
+            'collectNums'=>$colectSum
+        ];
+    }
+    /**
+     *小喇叭更新状态
+     * @return int
+     */
+    public static function noSeeScoreNums():int
+    {
+        $redis = new Redis();
+        $key = "new_scores_log:" . self::$clientId;
+        $newScoreNums = $redis->get($key);
+        $newScoreNums = empty($newScoreNums) ? 0 : $newScoreNums;
+        return $newScoreNums;
     }
 }

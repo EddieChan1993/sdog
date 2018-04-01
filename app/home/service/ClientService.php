@@ -135,7 +135,8 @@ class ClientService extends BaseService
                 ->setInc('view_num');
 
             //操作积分
-            ExtraService::score(ScoreModel::$seeOtherInfoType, self::$clientId);
+            ScoreService::score(ScoreModel::$seedGetType, $clientId);
+            ScoreService::score(ScoreModel::$seeOtherInfoType, self::$clientId);
             Db::commit();
             unset($data['self_info_ok']);
             $flag = $data;

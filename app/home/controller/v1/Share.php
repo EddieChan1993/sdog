@@ -44,11 +44,7 @@ class Share extends Base
     //离线阶段的积分情况
     function noSeeScoreLog()
     {
-        $res = ExtraService::noSeeScoreLog();
-        if (empty($res)) {
-            $this->warning(ExtraService::getErr());
-        }
+        $res = ExtraService::newScoreLog();
         $this->output($res);
-
     }
 }
