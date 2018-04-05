@@ -928,4 +928,53 @@ function is_installed()
     }
     return $cmfIsInstalled;
 }
+
 /*==========================================================extra=====================================================*/
+//根据生日计算年龄
+ function calcAge($birthday) {
+    $age = 0;
+    if(!empty($birthday)){
+        $age = strtotime($birthday);
+        if($age === false){
+            return 0;
+        }
+
+        list($y1,$m1,$d1) = explode("-",date("Y-m-d", $age));
+
+        list($y2,$m2,$d2) = explode("-",date("Y-m-d"), time());
+
+        $age = $y2 - $y1;
+        if((int)($m2.$d2) < (int)($m1.$d1)){
+            $age -= 1;
+        }
+    }
+    return $age;
+}
+
+/**
+ * 添加图片日志
+ * @param $path
+ * @param $type
+ * @param string $fileSize
+ * @throws Exception
+ */
+function add_img_db($path,$type,$fileSize="")
+{
+    if ($type == 0) {
+        $filePath = ".".$path;
+        $fileSize = filesize($filePath);
+    }
+    $map = [
+        'upload_date'=>time(),
+        'img_size' => getFileSize($fileSize),
+        'ip'=>request()->ip(),
+        'user_id' => open_secret(cookie('UID')),
+        'img_path'=>$path,
+        'type'=>$type,
+    ];
+    $res=Db::name('imgs')->insert($map);
+    if (!$res) {
+        throw new Exception("图片插入日志错误");
+    }
+}
+

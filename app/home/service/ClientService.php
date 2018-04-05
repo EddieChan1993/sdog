@@ -183,6 +183,7 @@ class ClientService extends BaseService
             $valid = new Validate([
                 ['name','require|unique:clients','姓名需要填写|当前所填姓名已经重复'],
                 ['sex','require|in:0,1','请选择性别|当前性别无效'],
+                ['birth','require','选择你的生日'],
                 ['height','require|number','请选择身高|身高含有非法字符'],
                 ['school','require','学校需要填写'],
                 ['remark','require','你心目中的他/她?'],
@@ -196,6 +197,7 @@ class ClientService extends BaseService
             $imgArr=explode(',', $data['img_list']);
             unset($data['img_list']);
             //更新个人信息
+            $data['age'] = calcAge($data['birth']);
             CurdService::name('clients')->update($data);
             if (count($imgArr) == 0&&count($imgArr)>4) {
                 throw new Exception("图片必传且不能超过4张");

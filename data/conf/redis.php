@@ -2,7 +2,7 @@
 return [
     'host' => '127.0.0.1',
     'port' => 6379,
-    'password' => 'dcwen1993',
+    'password' => 'root',
     'select' => 0,
     'timeout' => 0,
     'expire' => 0,

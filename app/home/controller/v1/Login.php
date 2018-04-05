@@ -18,15 +18,15 @@ class Login extends Base
     {
         $res = AuthService::authToken($_POST);
         if (!$res) {
-            self::warning(AuthService::getErr());
+            $this->warning(AuthService::getErr());
         }
-        self::output($res);
+        $this->output($res);
     }
 
     function getOpenId()
     {
         $res=AuthService::getOpenId($_POST);
-        self::output($res);
+        $this->output($res);
     }
 
     //进入app，获取用户信息
@@ -34,8 +34,8 @@ class Login extends Base
     {
         $res = AuthService::getToken($_POST);
         if (!$res) {
-            self::warning(AuthService::getErr());
+            $this->warning(AuthService::getErr());
         }
-        self::output($res);
+       $this->output($res);
     }
 }
