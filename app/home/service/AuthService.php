@@ -153,8 +153,8 @@ class AuthService extends BaseService
     public static function getOpenId($data):array
     {
         $code = $data['code'];
-        $appid = "wxaeb595dcdfa3dbe0";
-        $appSecret = "d1cb6c20d19167602b0afe18fc543eab";
+        $appid = plugins_value('weixin','appid');
+        $appSecret = plugins_value('weixin','appsecret');
         $url = 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code';
         $url = sprintf($url, $appid, $appSecret, $code);
         return http_curl($url);
