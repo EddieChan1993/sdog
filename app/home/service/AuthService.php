@@ -149,4 +149,14 @@ class AuthService extends BaseService
             throw new Exception("redis save client_id error");
         }
     }
+
+    public static function getOpenId($data):array
+    {
+        $code = $data['code'];
+        $appid = "wxaeb595dcdfa3dbe0";
+        $appSecret = "d1cb6c20d19167602b0afe18fc543eab";
+        $url = 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code';
+        $url = sprintf($url, $appid, $appSecret, $code);
+        return http_curl($url);
+    }
 }

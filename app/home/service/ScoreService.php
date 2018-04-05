@@ -49,7 +49,7 @@ class ScoreService extends BaseService
             case ScoreModel::$collectedGetType:
                 //被收藏
                 self::setDbScoreInc($client_id, ScoreModel::$collectedGetScore);
-                self::saveScoreLog($client_id, "被她/他所喜欢", +ScoreModel::$collectedGetScore,ScoreModel::$collectedGetType);
+                self::saveScoreLog($client_id, "被她/他喜欢", +ScoreModel::$collectedGetScore,ScoreModel::$collectedGetType);
                 break;
             case ScoreModel::$signInGetType:
                 //签到
@@ -59,7 +59,7 @@ class ScoreService extends BaseService
             case ScoreModel::$seedGetType:
                 //签到
                 self::setDbScoreInc($client_id, ScoreModel::$seedGetTypeScore);
-                self::saveScoreLog($client_id, "被她/他查看",+ScoreModel::$signInGetScore,ScoreModel::$seedGetType);
+                self::saveScoreLog($client_id, "被她/他查看",+ScoreModel::$seedGetTypeScore,ScoreModel::$seedGetType);
                 break;
             default:
                 break;

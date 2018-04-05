@@ -22,8 +22,8 @@ class ScoreModel
     public static $editSelfInfoNeedScore=5;//编辑个人资料消耗分数
     public static $shareGetScore=10;//分享获取分数
     public static $perfectSelfInfoScore=10;//完善资料获取分数
-    public static $thumbUpedGetScore = 1;//被点赞获取分数
-    public static $collectedGetScore = 1;//被收藏获取分数
-    public static $signInGetScore = 5;//被收藏获取分数
+    public static $thumbUpedGetScore = 2.5;//被点赞获取分数
+    public static $collectedGetScore = 2.5;//被收藏获取分数
+    public static $signInGetScore = 5;//签到获取积分
     public static $seedGetTypeScore = 2.5;//被查看获取分数
 }

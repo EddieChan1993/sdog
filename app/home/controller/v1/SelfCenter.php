@@ -49,4 +49,6 @@ class SelfCenter extends Base
         }
         $this->output($res);
     }
+
+
 }

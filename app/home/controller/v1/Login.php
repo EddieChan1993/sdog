@@ -23,6 +23,12 @@ class Login extends Base
         self::output($res);
     }
 
+    function getOpenId()
+    {
+        $res=AuthService::getOpenId($_POST);
+        self::output($res);
+    }
+
     //进入app，获取用户信息
     public function getToken()
     {
