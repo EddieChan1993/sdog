@@ -13,6 +13,8 @@ use app\admin\service\core\UpdateService;
 use app\home\controller\Base;
 use app\home\service\AuthService;
 use app\home\service\UploadService;
+use Exception;
+use think\Db;
 
 /**
  * 七牛上传接口
@@ -31,7 +33,7 @@ class Except extends Base
             if (empty($_FILES)) {
                 throw new \Exception("请上传图片");
             }
-            $res=UploadService::qiniuUplogImg($_FILES['img_file']);
+            $res = UpdateService::updateQiniu($_FILES['img_file']);
             if (empty($res)) {
                 throw new \Exception(UpdateService::getErr());
             }
@@ -43,10 +45,21 @@ class Except extends Base
 
     function delImg()
     {
-        $res = UploadService::qiniuDelImg($_POST['key']);
-        if (empty($res)) {
-            $this->warning(UploadService::getErr());
+        $imgArr = Db::name('imgs')
+            ->where('img_path', input('img_url'))
+            ->field('id,img_path,type')
+            ->find();
+        try {
+            if (empty($imgArr)) {
+                throw new \Exception("该文件不存在");
+            }
+            $res = UpdateService::delFile($imgArr['img_path'], $imgArr['type'], $imgArr['id']);
+            if (!$res) {
+                throw new \Exception(UpdateService::getErr());
+            }
+            $this->output("删除成功");
+        } catch (\Exception $e) {
+            $this->warning($e->getMessage());
         }
-        $this->output("删除成功");
     }
 }
