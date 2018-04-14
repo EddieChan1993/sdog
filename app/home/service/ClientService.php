@@ -182,6 +182,7 @@ class ClientService extends BaseService
             }
             $valid = new Validate([
                 ['name','require|unique:clients','姓名需要填写|当前所填姓名已经重复'],
+                ['weixin','require|unique:clients','微信号需要填写|微信号已经重复'],
                 ['sex','require|in:0,1','请选择性别|当前性别无效'],
                 ['birth','require','选择你的生日'],
                 ['height','require|number','请选择身高|身高含有非法字符'],
