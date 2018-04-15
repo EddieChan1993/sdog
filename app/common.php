@@ -869,7 +869,7 @@ function plugins_value($wid_key, $wid_name)
         $chids_arr = explode('=', $v);
         foreach ($chids_arr as $k) {
             if ($k == $wid_name) {
-                return $chids_arr[1];
+                return trim($chids_arr[1]);
             }
         }
     }
