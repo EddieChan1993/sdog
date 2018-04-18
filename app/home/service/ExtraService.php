@@ -167,6 +167,30 @@ class ExtraService extends BaseService
         return $flag;
     }
 
+    //是否签到
+    public static function isSignIn()
+    {
+        $flag = false;
+        try {
+            $redis = new Redis();
+            $key = "sign_in:" . self::$clientId;
+            $signInTime = $redis->get($key);
+            if (!empty($redis->get($key))) {
+                $today = strtotime(date('Ymd'));
+                if ($signInTime < $today) {
+                    $flag = false;
+                }else{
+                    $flag = true;
+                }
+            }else{
+                $flag = false;
+            }
+        } catch (Exception $e) {
+            self::setErr($e);
+        }
+        return $flag;
+    }
+
     /**
      * 离线期间积分记录
      * @return array

@@ -13,6 +13,7 @@ use app\home\controller\Base;
 use app\home\service\AuthService;
 use app\home\service\ClientService;
 use app\home\service\ExtraService;
+use think\Exception;
 
 //首页
 class HomePage extends Base
@@ -69,12 +70,20 @@ class HomePage extends Base
         $this->output($res);
     }
 
+    //签到
     function signIn()
     {
         $res = ExtraService::signIn();
         if (empty($res)) {
             $this->warning(ExtraService::getErr());
         }
+        $this->output($res);
+    }
+
+    //是否签到
+    function isSignIn()
+    {
+        $res = ExtraService::isSignIn();
         $this->output($res);
     }
 }

@@ -50,6 +50,7 @@ class ClientService extends BaseService
         //获取当前用户收藏的用户列表
         $mapCollect['client_id'] = self::$clientId;
         $mapCollect['collect_client_id'] = ['in', $clientIdArr];
+        $mapCollect['d_time'] = 0;
         $collect = CurdService::name('collect')->getAllData($mapCollect, 'collect_client_id');
         $collectClientIdArr = array_column($collect, 'collect_client_id');
 
@@ -85,7 +86,7 @@ class ClientService extends BaseService
             //获取自己的信息
             $clientId = self::$clientId;
             $clientMap['id'] = $clientId;
-            $filed = "name,school,birth,remark,weixin,height,score";
+            $filed = "avatar,name,school,birth,remark,weixin,height,score,age";
             $baseInfo = CurdService::name('clients')->getOneData($clientMap,$filed);
             $imgJson=CurdService::name('client_img')
                 ->getOneData(['client_id' => self::$clientId], 'img');
@@ -117,7 +118,7 @@ class ClientService extends BaseService
             //获取他人的信息
             $clientId = $data['client_id'];
             $clientMap['id'] = $clientId;
-            $filedData = "name,sex,school,birth,remark,weixin,remark,self_info_ok";
+            $filedData = "name,sex,school,birth,remark,weixin,remark,self_info_ok,age,height";
             $data = CurdService::name('clients')->getOneData($clientMap,$filedData);
             $imgJson=CurdService::name('client_img')
                 ->getOneData(['client_id' =>$clientId], 'img');
@@ -176,10 +177,15 @@ class ClientService extends BaseService
         try {
             $data['id'] = self::$clientId;
             $selfInfo = CurdService::name('clients')->getOneData(['id'=>self::$clientId]);
-            if ($selfInfo['score']<ScoreModel::$editSelfInfoNeedScore) {
-                $str = sprintf("编辑个人资料所需积分【%d】不足,您当前积分【%d】！", ScoreModel::$editSelfInfoNeedScore,$selfInfo['score']);
-                throw new Exception($str);
+
+            if (!empty($selfInfo['self_info_ok'])) {
+                //首次编辑，获取积分
+                if ($selfInfo['score']<ScoreModel::$editSelfInfoNeedScore) {
+                    $str = sprintf("编辑个人资料所需积分【%d】不足,您当前积分【%d】！", ScoreModel::$editSelfInfoNeedScore,$selfInfo['score']);
+                    throw new Exception($str);
+                }
             }
+
             $valid = new Validate([
                 ['name','require|unique:clients','姓名需要填写|当前所填姓名已经重复'],
                 ['weixin','require|unique:clients','微信号需要填写|微信号已经重复'],
@@ -246,6 +252,7 @@ class ClientService extends BaseService
         $flag = [];
         try {
             $collectMap['client_id'] = self::$clientId;
+            $collectMap['d_time'] =0;
             $pageCur = $data['pageCur'];
             $pageLimit = $data['pageLimit'];
             $collect=CurdService::name('collect')->getLimitData($collectMap,$pageCur,$pageLimit,'collect_client_id');
@@ -262,12 +269,6 @@ class ClientService extends BaseService
             $clientImgArr = array_column($clientImg, 'img');
             $clientIdMapImg = array_combine($clientIdArr, $clientImgArr);
 
-            //获取当前用户收藏的用户列表
-            $mapCollect['client_id'] = self::$clientId;
-            $mapCollect['collect_client_id'] = ['in', $clientIdArr];
-            $collect = CurdService::name('collect')->getAllData($mapCollect, 'collect_client_id');
-            $collectClientIdArr = array_column($collect, 'collect_client_id');
-
             //获取当前用户点赞的用户列表
             $mapThumbUp['client_id'] = self::$clientId;
             $mapThumbUp['thumb_client_id'] = ['in', $clientIdArr];
@@ -283,7 +284,7 @@ class ClientService extends BaseService
                 $imgArr = json_decode($clientIdMapImg[$v['id']]);
                 $clients[$k]['img'] = $imgArr[0];
                 $v['c_time'] = tranTime($v['c_time']);
-                $v['is_collected'] = in_array($v['id'], $collectClientIdArr);
+                $v['is_collected'] = true;
                 $v['is_thumb'] = in_array($v['id'], $thumbClientIdArr);
             }
             return $clients;
