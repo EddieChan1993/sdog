@@ -99,6 +99,30 @@ class ClientService extends BaseService
     }
 
     /**
+     * 获取他人信息前判定积分是否足够
+     * @return bool
+     */
+    public static function getBeforeOtherInfo($otherId): bool
+    {
+        $flag = false;
+        try {
+            if ($otherId == self::$clientId) {
+                throw new \Exception("亲你可以去个人中心查看你得喔！");
+            }
+            $selfInfo = CurdService::name('clients')->getOneData(['id'=>self::$clientId], 'score');
+            $score = $selfInfo['score'];
+            if ($score < ScoreModel::$seeOtherInfoNeedScore) {
+                $str = sprintf("当前积分【%d】不足,推广可获得积分喔", $score);
+                throw new Exception($str);
+            }
+            $flag = true;
+        } catch (\Exception $e) {
+            self::setErr($e);
+        }
+        return $flag;
+    }
+
+    /**
      * 获取他人信息
      * @param array $data
      * @return array
@@ -118,7 +142,7 @@ class ClientService extends BaseService
             //获取他人的信息
             $clientId = $data['client_id'];
             $clientMap['id'] = $clientId;
-            $filedData = "name,sex,school,birth,remark,weixin,remark,self_info_ok,age,height";
+            $filedData = "name,sex,school,birth,remark,weixin,remark,self_info_ok,age,height,avatar";
             $data = CurdService::name('clients')->getOneData($clientMap,$filedData);
             $imgJson=CurdService::name('client_img')
                 ->getOneData(['client_id' =>$clientId], 'img');

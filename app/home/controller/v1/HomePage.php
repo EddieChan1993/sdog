@@ -40,6 +40,15 @@ class HomePage extends Base
         $this->output($res);
     }
 
+    //查看他人信息前判断积分是否足够
+    function beforeOtherInfo()
+    {
+        $res = ClientService::getBeforeOtherInfo($_POST['otherId']);
+        if (empty($res)) {
+            $this->warning(ClientService::getErr());
+        }
+        $this->output("pass");
+    }
     //我的收藏
     function myCollect()
     {
